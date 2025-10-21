@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>iCloud Dashboard</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Helvetica, Arial, sans-serif;
+        background: linear-gradient(
+          135deg,
+          #667eea 0%,
+          #764ba2 50%,
+          #f093fb 100%
+        );
+        min-height: 100vh;
+        padding: 20px;
+      }
+
+      .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px 30px;
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        border-radius: 15px;
+        margin-bottom: 30px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+      }
+
+      .logo {
+        font-size: 24px;
+        font-weight: 600;
+        color: white;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .header-icons {
+        display: flex;
+        gap: 15px;
+      }
+
+      .icon-btn {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.2);
+        border: none;
+        color: white;
+        font-size: 18px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s;
+      }
+
+      .icon-btn:hover {
+        background: rgba(255, 255, 255, 0.3);
+        transform: scale(1.1);
+      }
+
+      .container {
+        max-width: 1400px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: 380px 1fr;
+        gap: 25px;
+      }
+
+      .profile-card {
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 20px;
+        padding: 40px;
+        text-align: center;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+        height: fit-content;
+      }
+
+      .profile-img {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        margin: 0 auto 20px;
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 48px;
+        font-weight: bold;
+        box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+      }
+
+      .profile-name {
+        font-size: 32px;
+        font-weight: 600;
+        color: #1d1d1f;
+        margin-bottom: 5px;
+      }
+
+      .profile-email {
+        color: #86868b;
+        font-size: 15px;
+        margin-bottom: 20px;
+      }
+
+      .profile-plan {
+        display: inline-block;
+        padding: 8px 20px;
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        color: white;
+        border-radius: 20px;
+        font-size: 14px;
+        font-weight: 500;
+        margin-bottom: 20px;
+      }
+
+      .back-home-btn {
+        width: 100%;
+        padding: 12px 20px;
+        background: #667eea;
+        color: white;
+        border: none;
+        border-radius: 10px;
+        font-size: 16px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.3s;
+        margin-top: 20px;
+      }
+
+      .back-home-btn:hover {
+        background: #764ba2;
+        transform: translateY(-2px);
+        box-shadow: 0 5px rgba(102, 126, 234, 0.3);
+      }
+
+      .main-content {
+        display: flex;
+        flex-direction: column;
+        gap: 25px;
+      }
+
+      .app-card {
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 20px;
+        padding: 30px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+        transition: all 0.3s;
+      }
+
+      .app-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 25px 70px rgba(0, 0, 0, 0.2);
+      }
+
+      .app-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 25px;
+      }
+
+      .app-title {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+      }
+
+      .app-icon {
+        width: 50px;
+        height: 50px;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 24px;
+        color: white;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      }
+
+      .mail-icon {
+        background: linear-gradient(135deg, #0ea5e9, #2563eb);
+      }
+      .drive-icon {
+        background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+      }
+      .notes-icon {
+        background: linear-gradient(135deg, #f59e0b, #d97706);
+      }
+
+      .app-name {
+        font-size: 24px;
+        font-weight: 600;
+        color: #1d1d1f;
+      }
+
+      .app-subtitle {
+        font-size: 14px;
+        color: #86868b;
+      }
+
+      .open-btn {
+        padding: 8px 20px;
+        background: rgba(102, 126, 234, 0.1);
+        border: none;
+        border-radius: 10px;
+        color: #667eea;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.3s;
+      }
+
+      .open-btn:hover {
+        background: #667eea;
+        color: white;
+      }
+
+      .mail-list {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+      }
+
+      .mail-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px;
+        background: rgba(102, 126, 234, 0.05);
+        border-radius: 12px;
+        border-left: 3px solid #667eea;
+        transition: all 0.3s;
+        cursor: pointer;
+      }
+
+      .mail-item:hover {
+        background: rgba(102, 126, 234, 0.1);
+        transform: translateX(5px);
+      }
+
+      .mail-dot {
+        width: 8px;
+        height: 8px;
+        background: #667eea;
+        border-radius: 50%;
+        margin-right: 12px;
+      }
+
+      .mail-info {
+        flex: 1;
+      }
+
+      .mail-sender {
+        font-weight: 600;
+        color: #1d1d1f;
+        margin-bottom: 3px;
+      }
+
+      .mail-subject {
+        font-size: 13px;
+        color: #86868b;
+      }
+
+      .mail-date {
+        font-size: 13px;
+        color: #86868b;
+      }
+
+      .file-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 200px);
+        gap: 21px;
+        justify-content: start;
+        margin-bottom: 10px;
+      }
+
+      .file-item {
+        padding: 10px;
+        background: rgba(102, 126, 234, 0.05);
+        border-radius: 12px;
+        transition: all 0.3s;
+        cursor: pointer;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        aspect-ratio: 1 / 1;
+        justify-content: center;
+      }
+
+      .file-item:hover {
+        background: rgba(102, 126, 234, 0.1);
+        transform: scale(1.05);
+      }
+
+      .file-icon {
+        font-size: 32px;
+        margin-bottom: 10px;
+      }
+
+      .file-name {
+        font-size: 14px;
+        font-weight: 500;
+        color: #1d1d1f;
+        margin-bottom: 5px;
+      }
+
+      .file-info {
+        font-size: 12px;
+        color: #86868b;
+      }
+
+      .notes-grid {
+        display: grid;
+        grid-template-columns: repeat(3,250px);
+        gap: 15px;
+      }
+
+      .note-item {
+        padding: 20px;
+        background: linear-gradient(
+          135deg,
+          rgba(245, 158, 11, 0.1),
+          rgba(217, 119, 6, 0.1)
+        );
+        border-radius: 12px;
+        transition: all 0.3s;
+        cursor: pointer;
+        border-left: 4px solid #f59e0b;
+      }
+
+      .note-item:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 30px rgba(245, 158, 11, 0.2);
+      }
+
+      .note-title {
+        font-weight: 600;
+        color: #1d1d1f;
+        margin-bottom: 8px;
+      }
+
+      .note-date {
+        font-size: 12px;
+        color: #86868b;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="header">
+      <div class="logo"><span></span> Home_avida</div>
+      <div class="header-icons">
+        <button class="icon-btn">🔔</button>
+        <button class="icon-btn">➕</button>
+        <button class="icon-btn">⚙️</button>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="profile-card">
+        <div class="profile-img">A</div>
+        <div class="profile-name">A</div>
+        <div class="profile-email">avida@icloud.com</div>
+        <div class="profile-plan">iCloud+</div>
+
+        <!-- tombol kembali halaman awal di sini -->
+         <button class="back-home-btn" onclick="KembaliKeHalamanAwal()">
+             <a href="index.html" class="tbl-biru">Kembali ke Halaman Awal</a>
+         </button>
+      </div>
+
+      <div class="main-content">
+        <div class="app-card">
+          <div class="app-header">
+            <div class="app-title">
+              <div class="app-icon mail-icon">✉️</div>
+              <div>
+                <div class="app-name">Mail</div>
+                <div class="app-subtitle">
+                  📥 Inbox • 3 pesan belum dibaca
+                </div>
+              </div>
+            </div>
+            <button class="open-btn">Buka ↗</button>
+          </div>
+          <div class="mail-list">
+            <div class="mail-item">
+              <div class="mail-dot"></div>
+              <div class="mail-info">
+                <div class="mail-sender">kurir bunga</div>
+                <div class="mail-subject">
+                  Hot coins giveaway - Trade to win HYPE...
+                </div>
+              </div>
+              <div class="mail-date">17/10/25</div>
+            </div>
+            <div class="mail-item">
+              <div class="mail-dot"></div>
+              <div class="mail-info">
+                <div class="mail-sender">3726 mdpl</div>
+                <div class="mail-subject">
+                  indah hanyalah kata, kamu wujudnya
+                </div>
+              </div>
+              <div class="mail-date">19/10/25</div>
+            </div>
+            <div class="mail-item">
+              <div class="mail-dot"></div>
+              <div class="mail-info">
+                <div class="mail-sender">naufal</div>
+                <div class="mail-subject">
+                  gapapa kalau kamu butuh jarak, aku tahu kamu cuma butuh tenang, bukan menjauh, dan Kamu nggak salah karena butuh ruang, semua orang punya caranya sendiri buat merasa aman
+                </div>
+              </div>
+              <div class="mail-date">19/10/25</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="app-card">
+          <div class="app-header">
+            <div class="app-title">
+              <div class="app-icon drive-icon">📁</div>
+              <div>
+                <div class="app-name">Drive</div>
+                <div class="app-subtitle">📌 Terbaru</div>
+              </div>
+            </div>
+            <button class="open-btn">Buka ↗</button>
+          </div>
+          <div class="file-grid">
+            <div class="file-grid">
+    <!-- First meet -->
+    <div class="file-item">
+        <img src="c:\Users\User\Downloads\Foto iCloud\IMG_4037.JPEG" style="width: 100px; height: auto">
+        <div class="file-name">eighteen coffe</div>
+        <div class="file-info">first meet</div>
+    </div>
+    
+    <!-- gallus -->
+    <div class="file-item">
+        <img src="c:\Users\User\Downloads\IMG_4639.JPEG" style="width: 100px; height: auto">
+        <div class="file-name">gallus</div>
+        <div class="file-info">so cute</div>
+    </div>
+    
+    <!-- semarang -->
+    <div class="file-item">
+        <img src="c:\Users\User\Downloads\semarang.jpg" style="width: 100px; height: auto">
+        <div class="file-name">semarang</div>
+        <div class="file-info">beatiful girl</div>
+    </div>
+    
+    <!-- File 4 - contoh surat -->
+    <div class="file-item">
+        <img src="c:\Users\User\Downloads\IMG_8716.JPEG" style="width: 100px; height: auto">
+        <div class="file-name">kopi nako</div>
+        <div class="file-info">She’s pure magic in human form</div>
+    </div>
+</div>
+        </div>
+
+        <div class="app-card">
+          <div class="app-header">
+            <div class="app-title">
+              <div class="app-icon notes-icon">📝</div>
+              <div>
+                <div class="app-name">Catatan</div>
+                <div class="app-subtitle">📋 Semua iCloud</div>
+              </div>
+            </div>
+            <button class="open-btn">Buka ↗</button>
+          </div>
+          <div class="notes-grid">
+            <div class="note-item">
+              <div class="note-title">naufal</div>
+              <div class="note-date">25/10/25 kita uda ngga bisa ketemu lagi yaa?</div>
+            </div>
+            <div class="note-item">
+              <div class="note-title">senang bisa mengenalmu</div>
+              <div class="note-date">25/10/25 together or not together, i hope the universe takes care of you no matter what</div>
+            </div>
+            <div class="note-item">
+                <div class="note-title">for avida</div>
+                <div class="note-date">20/10/25 🌧️ It’s okay if you’re still holding on. Healing doesn’t have a deadline.
+You don’t have to rush to let go — just breathe, one day at a time.
+Even if the memories still hurt, they’re proof that you once loved deeply.
+And that’s something beautiful too. 🌙</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Add hover effects and interactions
+      document
+        .querySelectorAll(".mail-item, .file-item, .note-item")
+        .forEach((item) => {
+          item.addEventListener("click", function () {
+            this.style.animation = "pulse 0.3s";
+            setTimeout(() => {
+              this.style.animation = "";
+            }, 300);
+          });
+        });
+
+      // Add notification badge animation
+      const notifBtn = document.querySelector(".icon-btn");
+      setInterval(() => {
+        notifBtn.style.animation = "pulse 0.5s";
+        setTimeout(() => {
+          notifBtn.style.animation = "";
+        }, 500);
+      }, 5000);
+    </script>
+  </body>
+</html>
